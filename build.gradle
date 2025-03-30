@@ -25,6 +25,7 @@ repositories {
 
 dependencies {
 	implementation(libs.synapse.api.rest.imperative)
+	implementation(libs.jackson.dataformat.yaml)
 	implementation 'org.springframework.boot:spring-boot-starter-mustache'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'

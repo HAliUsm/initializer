@@ -15,6 +15,7 @@ dependencyResolutionManagement {
         version('synapse', '0.4.0')
 
         library('synapse-api-rest-imperative', 'io.americanexpress.synapse', 'synapse-api-rest-imperative').versionRef('synapse')
+        library('jackson-dataformat-yaml', 'com.fasterxml.jackson.dataformat', 'jackson-dataformat-yaml').version('2.17.2')
     }
 }}
 

@@ -1,0 +1,20 @@
+pluginManagement {
+    plugins {
+        id('dev.aga.gradle.version-catalog-generator')
+        id('com.gradle.develocity')
+        id('org.sonarqube') version('6.0.1.5171')
+        id('org.springframework.boot') version('3.2.4')
+    }
+}
+
+rootProject.name = 'initializer'
+
+dependencyResolutionManagement {
+    versionCatalogs {
+    libs {
+        version('synapse', '0.4.0')
+
+        library('synapse-api-rest-imperative', 'io.americanexpress.synapse', 'synapse-api-rest-imperative').versionRef('synapse')
+    }
+}}
+

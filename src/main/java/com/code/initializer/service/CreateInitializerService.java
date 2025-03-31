@@ -2,7 +2,7 @@ package com.code.initializer.service;
 
 import com.code.initializer.model.CreateInitalizerResponse;
 import com.code.initializer.model.CreateInitializerRequest;
-import com.code.initializer.service.yamlSurgeon.YamlParser;
+import com.code.initializer.service.helper.yamlSurgeon.YamlParser;
 import io.americanexpress.synapse.framework.exception.ApplicationClientException;
 import io.americanexpress.synapse.framework.exception.model.ErrorCode;
 import io.americanexpress.synapse.service.imperative.service.BaseService;

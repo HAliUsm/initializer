@@ -13,7 +13,7 @@ public class TemplateConstants {
 
     private String author;
 
-    private String endPoint;
+    private List<String> endPoint;
 
     private String DependencyImports;
 

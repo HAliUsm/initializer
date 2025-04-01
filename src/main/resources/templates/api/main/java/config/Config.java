@@ -35,7 +35,7 @@ public class __configClassNameUCamel__ extends ServiceRestConfig {
     private final HttpHeadersInterceptor httpHeadersInterceptor;
 
     /**
-     * Constructs the service config.
+     * Constructs the API config.
      *
      * @param defaultobjectMapper the default object mapper.
      * @param metricsInterceptor the service metrics filter.

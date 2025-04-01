@@ -10,6 +10,6 @@ public class ClassNameCreator {
     public void createClassName(List<List<String>> pathAndCrud) {
         // Logic to create a class name
         // This is a placeholder for the actual implementation
-        System.out.println("Creating class name: " + className);
+        System.out.println("Creating class name: " + pathAndCrud);
     }
 }

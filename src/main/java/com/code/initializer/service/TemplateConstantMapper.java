@@ -7,7 +7,5 @@ public class TemplateConstantMapper {
 
     public void map(CreateInitializerRequest request, TemplateConstants context ) {
         context.setPackageName(request.getPackageName());
-        context.setAuthor(request.getAuthor());
-        context.setEndPoint();
     }
 }

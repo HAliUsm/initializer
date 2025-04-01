@@ -1,0 +1,72 @@
+openapi: 3.0.3
+info:
+  title: Service Initializer API
+  description: API for generating service code
+  version: 1.0.0
+servers:
+    - url: localhost:8080
+paths:
+  /initializer/v1/modules:
+    post:
+        summary: Generate service code
+        description: Generates service code based on the provided module name and type
+        requestBody:
+            required: true
+            content:
+            application/json:
+                schema:
+                    $ref: '#/components/schemas/CreateGeneratorServiceRequest'
+        responses:
+            '200':
+              description: Service code generated successfully
+              content:
+                  application/json:
+                  schema:
+                      type: zipfile
+            '400':
+              description: Bad request
+              content:
+
+                  application/json:
+                  schema:
+                      type: object
+                      properties:
+                      error:
+                          type: string
+                          example: Invalid module name or type
+schema:
+  components:
+    schemas:
+      CreateGeneratorServiceRequest:
+        type: object
+        description:  yaml and a module type needs to be pass to generate code.
+        properties:
+            yaml:
+              type: file
+              description: The Yaml needed to generate code
+            moduleName:
+              type: string
+              description: Module Name
+              example: "Book Store"
+            moduleType:
+              type: string
+              description: The type of the module (e.g., Service, API))
+              example: "Service"
+            packageName:
+              type: string
+              description: The Package Name
+              example: "com.bookstore"
+            authorName:
+              type: string
+              description: The Author's Ads Id
+              example: "adsid123"
+            dependencyList:
+                type: array
+                items:
+                    type: string
+                description: List of dependencies needed to generate code
+                example: ["spring-boot-starter-web", "spring-boot-starter-data-jpa"]
+            description:
+              type: string
+              description: The description of the module
+              example: "This is a sample module for generating service code"

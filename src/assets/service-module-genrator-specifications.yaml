@@ -1,0 +1,228 @@
+openapi: 3.0.3
+info:
+  title: Module Generator
+  description: A module generator.
+  version: 1.0.0
+servers:
+  - url: generator-dev.aexp.com
+  - url: generator-qa.aexp.com
+  - url: generator.aexp.com
+paths:
+  /identity/v1/modules:
+    post:
+      summary: Used to generate code using a openapi file
+      requestBody:
+        description: The create module request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateModuleServiceRequest'
+      responses:
+        201:
+          description: Module has been created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateModuleServiceResponse'
+        400:
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestResponse'
+              examples:
+                incorrectRequest:
+                  description: The input request does not match one of the four requests.
+                  value:
+                    code: "GENERIC_4XX_ERROR"
+                    message: "Invalid Request."
+                    developerMessage: "The correct request field is missing"
+                invalidRequest:
+                  description: There is more than one input request.
+                  value:
+                    code: "GENERIC_4XX_ERROR"
+                    message: "Invalid Request."
+                    developerMessage: "There is more than one input request"
+        401:
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+        500:
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerErrorResponse'
+components:
+  schemas:
+    CreateModuleServiceRequest:
+      type: object
+      description: a openapi file and a module type needs to be pass to generate code.
+      properties:
+        apiModules:
+          type: array
+          description: The api module data
+          items:
+            $ref: '#/components/schemas/ModuleData'
+        clientModules:
+          type: array
+          description: The client module data
+          items:
+            $ref: '#/components/schemas/ModuleData'
+        dataModules:
+          type: array
+          description: The data module data
+          items:
+            $ref: '#/components/schemas/ModuleData'
+        serviceModules:
+          type: array
+          description: The service module data
+          items:
+            $ref: '#/components/schemas/ModuleData'
+        subscriberModules:
+          type: array
+          description: The api module data
+          items:
+            $ref: '#/components/schemas/ModuleData'
+    ModuleData:
+      type: object
+      description: a openapi file and a module type needs to be pass to generate code.
+      properties:
+        fileName:
+          type: string
+          description: The openapi file needed to generate code
+          example: 'someFile.json'
+        moduleName:
+          type: string
+          description: The Module Name
+          example: "Postal Code"
+        authorName:
+          type: string
+          description: The Author's Ads Id
+          example: "John Doe"
+        language:
+          type: object
+          description: the project's language
+          properties:
+            type:
+              type: string
+              description: the project's language
+              example: "java"
+            version:
+              type: integer
+              description: the project's language version
+              example: 21
+        build:
+          type: string
+          description: the project's build
+          example: "gradle"
+        description:
+          type: string
+          description: the project's description
+          example: "This module calls the postal code api"
+        dependencies:
+          type: array
+          items:
+            type: string
+          example:
+            - "libs.address.postalcode"
+    CreateModuleServiceResponse:
+      type: object
+      properties:
+        zipFile:
+          type: string
+    InvalidRequestResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          example: "GENERIC_4XX_ERROR"
+        message:
+          type: string
+          example: "Invalid Request."
+        moreInfo:
+          type: string
+        developerMessage:
+          type: string
+          example: "The correct field is missing"
+
+    UnauthorizedResponse:
+      type: object
+      properties:
+        error_code:
+          type: string
+          example: "invalid app_token"
+        message:
+          type: string
+          example: "ErrorCode = IC_UE_APPTOKEN_VALIDATION_FAILED Message = APP JWT Token expired"
+        domain:
+          type: string
+          example: "security_gateway"
+
+    ServerErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          example: "GENERIC_5XX_ERROR"
+        message:
+          type: string
+          description: Encrypted stack trace.
+  parameters:
+    Authorization:
+      name: Authorization
+      in: header
+      required: true
+      description: Authorization header. Required A2A JWT and user JWT.
+      example: "claims app_authorization=eyJraWQiOiJyc2FLZVVOSUUxIiwiYWxnIjoiUlM1MTIifQ.eyJzY3AiOlsiXC9hY3BcL3YxXC9wYXJ0bmVyc1wvYXBwUmVnaXN0cmF0aW9uXC8qKjo6cG9zdHxkZWxldGUiXSwic3ViIjoiMGQ1ZmI2OGYtMTFjNC0zZTFjLTk4NDQtYTNhZjEzMGQ0OWM5IiwidmVyIjoiMS4wIiwiaXNzIjoiQW1leElEYWFTSUQiLCJ0eXAiOiJhcHAiLCJleHAiOjE2Nzk2NjY4MDUsImp0aSI6ImRiZmYyNjFlLTYwMmEtNDdmOS1hYWVmLTdjZWQ2OWVlM2E3ZiJ9.CkxARLCGtpxF3VJXUYSWUazNYBQYcRoHMHY6rPoeK1TWmCbKTrgskZneCbebwTXOFVDY68AASEJDakY7MXUjl5AT5ETCD0pXlwo2GVnWWD/63sSxCwvvxA/QvAdwc3ZtCfX+raZx1n/FQNv0ym0z0BIeITGz6niSgQx4GXqguJEG9ZHayFQAyPK0nkOQEIZ+ThY/2V1OxX+hy7LtQX9sI7R6Nes/e5DZ5rV9szBuDeNITrVVLcmedyzYqN9J2jWIH84xo0qbdQjMLM6A7f8t+fFJRGAs7o/xeOOK/6tTrL8czBBqgaNkj6ClS25etDNrt5U+rB8QlICAtZnQIURU4g==;user_authorization=eyJraWQiOiJyc2FLZVVOSUUxIiwiYWxnIjoiUlM1MTIifQ.eyJzY3AiOlsiXC9hY3BcL3YxXC9wYXJ0bmVyc1wvYXBwUmVnaXN0cmF0aW9uXC8qKjo6cG9zdHxkZWxldGUiXSwic3ViIjoiMGQ1ZmI2OGYtMTFjNC0zZTFjLTk4NDQtYTNhZjEzMGQ0OWM5IiwidmVyIjoiMS4wIiwiaXNzIjoiQW1leElEYWFTSUQiLCJ0eXAiOiJhcHAiLCJleHAiOjE2Nzk2NjY4MDUsImp0aSI6ImRiZmYyNjFlLTYwMmEtNDdmOS1hYWV="
+      schema:
+        type: string
+    ContentType:
+      name: Content-Type
+      in: header
+      required: true
+      description: The format of the request / response.
+      example: "application/json"
+      schema:
+        type: string
+    CorrelationId:
+      name: Correlation-ID
+      in: header
+      required: true
+      description: The UUID format identifier used to track a specific request.
+      example: "b3d27f9b-d21d-327c-164e-7fb6776f87b0"
+      schema:
+        type: string
+    ClientId:
+      name: Client-ID
+      in: header
+      required: true
+      description: The unique identifier for the client sending the request; e.g, app id.
+      example: "66000000"
+      schema:
+        type: string
+    ClientVersion:
+      name: Client-Version
+      in: header
+      required: true
+      description: The version number of the API sending the request.
+      example: "1.0"
+      schema:
+        type: string
+    DomainId:
+      name: Domain-ID
+      in: header
+      required: true
+      description: The identifier of the domain for which this request is a part of.
+      schema:
+        type: string
+        enum: [ IDENTITY_AND_SECURITY ]
+    JourneyId:
+      name: Journey-ID
+      in: header
+      required: true
+      description: The identifier of the journey for which this request is a part of.
+      schema:
+        type: string

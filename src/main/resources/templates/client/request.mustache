@@ -1,0 +1,13 @@
+package {{package}}.client.{{clientName}}.model;
+
+import io.americanexpress.synapse.client.rest.model.BaseClientRequest;
+
+/**
+* {@code {{requestModel}} } is the request object for {{clientName}} client.
+*/
+@Data
+public class {{requestModel}} implements BaseClientRequest {
+{{#vars}}
+    private {{{datatype}}} {{name}};
+{{/vars}}
+}

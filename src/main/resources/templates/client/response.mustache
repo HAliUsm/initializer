@@ -1,0 +1,13 @@
+package {{package}}.client.{{clientName}}.model;
+
+import io.americanexpress.synapse.client.rest.model.BaseClientResponse;
+
+/**
+* {@code {{responseModel}} } is the response object for {{clientName}} client.
+*/
+@Data
+public class {{responseModel}} implements BaseClientResponse {
+{{#vars}}
+    private {{{datatype}}} {{name}};
+{{/vars}}
+}

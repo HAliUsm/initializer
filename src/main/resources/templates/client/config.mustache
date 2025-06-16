@@ -1,0 +1,51 @@
+package {{package}}.config;
+
+import {{invokerPackage}}.{{clientClassName}};
+import {{handlerPackage}}.{{errorHandlerClassName}};
+import io.americanexpress.synapse.client.rest.config.BaseRestClientConfig;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.PropertySource;
+
+/**
+* {@code {{configClassName}} } contains configurations for {{clientName}} client.
+*/
+@Configuration
+@ComponentScan("{{invokerPackage}}.{{clientName}}")
+@PropertySource("classpath:client-{{clientName}}.properties")
+public class {{configClassName}} extends BaseRestClientConfig {
+
+/**
+* Client for making call to {{clientName}} api.
+*/
+private final {{clientClassName}} {{clientVariableName}}Client;
+
+/**
+* Response error handler for {{clientName}} client.
+*/
+private final {{errorHandlerClassName}} {{clientVariableName}}ResponseErrorHandler;
+
+/**
+* Instantiates a new {{clientName}} client config.
+*
+* @param {{clientVariableName}} Client the {{clientName}} client
+* @param {{clientVariableName}}ResponseErrorHandler the {{clientName}} response error handler
+*/
+public {{configClassName}}({{clientClassName}} {{clientVariableName}}Client, {{errorHandlerClassName}} {{clientVariableName}}ResponseErrorHandler) {
+this.{{clientVariableName}}Client = {{clientVariableName}}Client;
+this.{{clientVariableName}}ResponseErrorHandler = {{clientVariableName}}ResponseErrorHandler;
+}
+
+/**
+* Initializes client.
+*
+* @param destinationUrl url for {{clientName}} api
+*/
+@Value("${client.url}")
+@Override
+protected void initialize(String destinationUrl) {
+initializeClient(destinationUrl, {{clientVariableName}}Client, {{clientVariableName}}ResponseErrorHandler);
+}
+}

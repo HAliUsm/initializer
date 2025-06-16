@@ -1,0 +1,23 @@
+package {{package}};
+
+import {{modelPackage}}.{{requestModel}};
+import {{modelPackage}}.{{responseModel}};
+import io.americanexpress.synapse.client.rest.client.BaseRestClient;
+import io.americanexpress.synapse.client.rest.client.RestClient;
+import org.springframework.http.HttpMethod;
+
+/**
+ * {@code {{clientClassName}} for making an api call to a {{clientName}} api.
+ */
+@RestClient
+public class {{clientClassName}} } extends BaseRestClient<{{requestModel}}, {{responseModel}}, {{headersFactoryClassName}}> {
+
+    /**
+     * Argument constructor creates a new instance of BaseRestClient with given values.
+     *
+     * @param httpHeadersFactory HTTP headers factory used to produce the custom HTTP headers required to consume the back end service
+     */
+    protected {{clientClassName}}({{headersFactoryClassName}} httpHeadersFactory) {
+        super(httpHeadersFactory, HttpMethod.{{httpMethod}});
+    }
+}

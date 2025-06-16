@@ -18,7 +18,7 @@ public class TemplateEngine {
     private static final String TEMPLATE_PATH = "resources/templates/service";
 
 
-    public void build(Path templatePath, Path OutputPath, TemplateConstants templateConstants) throws IOException {
+    public void build(Path .templatePath, Path OutputPath, TemplateConstants templateConstants) throws IOException {
         // Implementation for building the template
         String TemplatContent = new String(Files.readAllBytes(Paths.get(TEMPLATE_PATH)));
         // This is where you would process the template files and generate the output
